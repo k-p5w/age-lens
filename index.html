@@ -1,91 +1,145 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ねんれいレンズ</title>
-    <meta name="description" content="ジャネーの法則を視覚化するツール：年齢による体感時間の違いを比較">
+
+    <title>ねんれいレンズ | ジャネーの法則で過去の「体感時間」を比較</title>
+    <meta name="description"
+        content="今の年齢と過去の年齢、感じ方の違いをジャネーの法則で可視化するツール。あの頃の1年は今の何年分？過去の出来事と今の自分の感覚を照らし合わせて、時間の密度を比較・分析できます。">
+    <meta name="keywords" content="ジェネレーションギャップ,ジェネギャものさし,ジャネーの法則,体感時間,年齢比較,時間の密度,過去の出来事,シミュレーション,ツール">
+
+    <meta property="og:title" content="ねんれいレンズ - 時間の密度を可視化する">
+    <meta property="og:description" content="ジャネーの法則で、あの頃の1年の重さを今の自分と比較するシミュレーションツール。">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://k-p5w.github.io/age-lens/">
     <link rel="stylesheet" href="style.css">
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-V6BSN44CQV"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-V6BSN44CQV');
+    </script>
 </head>
+
 <body>
 
-    <header class="hero">
-        <h1>ねんれいレンズ</h1>
-        <p class="subtitle">
-            年齢というレンズで、時間を見る
-        </p>
-    </header>
+    <div class="container">
+        <header>
+            <h1>ねんれいレンズ <small>〜ジェネギャものさし〜</small></h1>
+            <p>世代ごとの「あの頃」の感覚を比べるためのツールです。</p>
 
-    <main class="container">
+        </header>
+
+        <section class="card" data-section="001">
+            <h2>基準者（A）の設定</h2>
+            <div class="form-row" style="margin-bottom: 10px;">
+                <label for="currentAge">現在の年齢:</label>
+                <input id="currentAge" type="number" value="40" style="width: 60px;">歳
+            </div>
+            <div class="form-row">（
+                <label for="currentBirthYear">生まれ年:</label>
+                <input id="currentBirthYear" type="number" value="1986" style="width: 80px;">年）
+            </div>
+        </section>
+
         <section class="card" data-section="002">
-            <h2>比較設定</h2>
-            
+            <h2>過去の基準を設定</h2>
+            <p>▼「何年前の出来事」と比較対象にしたいですか？</p>
+
             <div class="form-row">
-                <label for="currentAge">基準の年齢</label>
-                <div style="flex: 1; display: flex; align-items: center; gap: 8px;">
-                    <input id="currentAge" type="number" min="1" max="120" value="30">
-                    <span class="unit">歳</span>
-                </div>
+                <label for="targetYear">基準となる西暦</label>
+                <input id="targetYear" type="number" value="2000">年
             </div>
 
-            <div class="form-row">
-                <label for="targetYear">西暦入力</label>
-                <div style="flex: 1; display: flex; align-items: center; gap: 8px;">
-                    <input id="targetYear" type="number" min="1900" max="3000" value="2015">
-                    <span class="unit">年</span>
-                </div>
+            <p>▼直接入力でなくても、プリセットから選べます。(e.g.任天堂＞Switch発売年など)</p>
+
+            <!-- カテゴリ選択 -->
+            <select id="presetCategory" style="margin-top: 10px; width: 100%;">
+                <option value="">-- カテゴリを選択 --</option>
+
+                <option value="society">🌏 社会の出来事</option>
+                <option value="music">🎵 音楽</option>
+                <option value="movie">🎥 映画</option>
+                <option value="tech">💻 テクノロジー</option>
+                <option value="internet">🌐 インターネット</option>
+                <option value="ghibli">アニメ（ジブリ）</option>
+                <option value="onepiece">アニメ（ONE PIECE）</option>
+                <option value="dragonball">アニメ（ドラゴンボール）</option>
+
+                <option value="nintendo">ゲーム（任天堂）</option>
+                <option value="sony">ゲーム（ソニー）</option>
+                <option value="game_all">ゲーム（総合）</option>
+            </select>
+
+            <!-- プリセット選択 -->
+            <select id="presetList" style="margin-top: 10px; width: 100%;">
+                <option value="">-- プリセットを選択 --</option>
+            </select>
+        </section>
+
+
+        <!-- ここに結果表示される -->
+        <section class="card" id="mainResult" data-section="003">
+            <div id="resultContent" class="placeholder">
+                ここに選択後の結果が表示されます
             </div>
 
-            <div class="divider">または</div>
+            <button id="swapAB" class="swap-btn">⇆（AとBの年齢を入れ替える ※基準西暦はそのまま）</button>
+        </section>
 
-            <div class="form-row">
-                <label for="preset">出来事プリセット</label>
-                <select id="preset">
-                    <option value="">-- 年を選ぶ --</option>
-                    <option value="2025">2025年</option>
-                    <option value="2022">2022年 (ChatGPT公開)</option>
-                    <option value="2020">2020年 (コロナ流行)</option>
-                    <option value="2015">2015年</option>
-                    <option value="2010">2010年</option>
-                    <option value="2000">2000年 (21世紀直前)</option>
-                    <option value="1990">1990年</option>
-                </select>
+        <section class="card" data-section="004">
+            <h2>比較対象者（B）のプロフィール</h2>
+            <p>その出来事を「何歳」の感覚で捉える人と比較しますか？</p>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px;">
+                <label>感覚の比較対象:</label>
+                <span id="sliderValue" style="font-weight: bold; color: var(--primary);">20歳</span>
+            </div>
+            <input type="range" id="compareAge" min="1" max="120" value="20" style="width: 100%;">
+
+            <div style="margin-top: 15px; display: flex; gap: 15px; flex-wrap: wrap;">
+                <div>
+                    <label for="compareAgeInput">年齢入力:</label>
+                    <input id="compareAgeInput" type="number" value="20" style="width: 60px;">歳
+                </div>
+                <div>
+                    <label for="compareBirthYear">生まれ年入力:</label>
+                    <input id="compareBirthYear" type="number" value="2006" style="width: 80px;">年
+                </div>
             </div>
         </section>
 
-        <section class="card result-card" data-section="003">
-            <h2>比較結果</h2>
-            <div id="mainResult">
-                <p>設定を変更すると、結果がリアルタイムに表示されます。</p>
-            </div>
-        </section>
-
-<section class="card" data-section="004">
-    <div style="display: flex; justify-content: space-between; align-items: baseline;">
-        <h2>比較対象の年齢</h2>
-        <div id="sliderValue" style="font-size: 1.5rem; font-weight: bold; color: var(--primary);">20歳</div>
-    </div>
-    <input type="range" id="compareAge" min="1" max="120" value="20" style="width: 100%;">
-</section>
         <section class="card" data-section="005">
             <h2>年齢別比較一覧</h2>
             <table>
                 <thead>
                     <tr>
-                        <th>比較年齢</th>
-                        <th>その人なら</th>
+                        <th>年齢</th>
+                        <th>当時の感覚</th>
                     </tr>
                 </thead>
-                <tbody id="resultTable"></tbody>
+                <tbody id="resultTable">
+                </tbody>
             </table>
         </section>
-    </main>
 
-    <footer>
-        <p>ねんれいレンズ β</p>
-        <p>年齢による体感時間を可視化する実験プロジェクト/ジャネーの法則を視覚化するツール<br></p>
-    </footer>
+        <footer>
+            <p><strong>ねんれいレンズ 〜ジェネギャものさし〜</strong></p>
+            <p>ジャネーの法則を応用し、世代ごとの「体感時間」を比較・可視化します。あの頃の「1年」の密度を、今の自分と比較してみましょう。</p>
+            <p>基準となる年齢（A）の「1年」が、比較対象の年齢（B）では何年分に相当するのかを可視化します。</p>
+
+            <p style="font-size: 0.8em; margin-top: 15px;">
+                &copy; 2026 ねんれいレンズ |
+                <a href="privacy.html" style="color: #666;">プライバシーポリシー</a>
+            </p>
+        </footer>
+    </div>
 
     <script src="script.js"></script>
 </body>
+
 </html>
