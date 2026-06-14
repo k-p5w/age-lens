@@ -160,12 +160,13 @@ function update() {
     const feltYear = currentYear - passedYears;
 
     resultContent.innerHTML = `
-        <p><strong>${baseAge}歳</strong>の方にとっての <strong>${targetYear}年</strong> は、
-        過去 <strong>${currentYear - targetYear} 年前</strong> の出来事です。</p>
+<p><strong>${baseAge}歳</strong>の方にとっての
+<strong>${targetYear}年（約${currentYear - targetYear}年前）</strong> は、</p>
 
-        <p>これを <strong>${compareAge}歳</strong> の方の感覚に置き換えると 、<br>
-        <strong>約 ${passedYears.toFixed(0)} 年前（${Math.floor(feltYear)} 年）</strong> に相当します。</p>
-    `;
+<p>これを <strong>${compareAge}歳</strong> の方の感覚に置き換えると、<br>
+<strong>${Math.floor(feltYear)}年（約${passedYears.toFixed(0)}年前）</strong> に相当します。</p>
+`;
+
 
     buildTable(distance);
 }
@@ -226,6 +227,26 @@ document.getElementById("swapAB").addEventListener("click", () => {
     if (sliderValue) sliderValue.textContent = ageA + "歳";
 
     update();
+});
+
+// --- 初回だけ初期化（A=50歳、B=25歳、基準西暦=現在-10） ---
+window.addEventListener("DOMContentLoaded", () => {
+    const CURRENT_YEAR = new Date().getFullYear();
+
+    // A（基準者）
+    document.getElementById("currentAge").value = 50;
+    document.getElementById("currentBirthYear").value = CURRENT_YEAR - 50;
+
+    // B（比較対象者）
+    document.getElementById("compareAge").value = 25;
+    document.getElementById("compareAgeInput").value = 25;
+    document.getElementById("compareBirthYear").value = CURRENT_YEAR - 25;
+    document.getElementById("sliderValue").textContent = "25歳";
+
+    // 基準西暦（targetYear）を「現在の年 - 10」にする
+    document.getElementById("targetYear").value = CURRENT_YEAR - 10;
+
+    update(); // 初期表示を反映
 });
 
 
