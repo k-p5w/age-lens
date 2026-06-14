@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ねんれいレンズ - 比較版</title>
+    <style>
+        :root { --primary: #3b82f6; --bg: #f8fafc; }
+        body { font-family: -apple-system, sans-serif; background: var(--bg); padding: 16px; margin: 0; color: #1e293b; }
+        .container { max-width: 500px; margin: auto; }
+        .card { background: white; padding: 20px; border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
+        .result-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.9em; }
+        .result-table th, .result-table td { padding: 10px; border-bottom: 1px solid #eee; text-align: center; }
+        .log-col { color: #2563eb; font-weight: bold; }
+        .sum-col { color: #7c3aed; font-weight: bold; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>ねんれいレンズ</h1>
+    <div class="card">
+        <label>私は <input type="number" id="myAge" value="60"> 歳</label><br><br>
+        <label>見たい年 <input type="number" id="baseYear" value="2015"></label>
+    </div>
+
+    <div class="card">
+        <h3>計算結果の比較</h3>
+        <table class="result-table">
+            <thead>
+                <tr><th>年齢</th><th>対数(ln)</th><th>離散(Σ)</th></tr>
+            </thead>
+            <tbody id="resultBody"></tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    const update = () => {
+        const myAge = parseInt(document.getElementById('myAge').value);
+        const baseYear = parseInt(document.getElementById('baseYear').value);
+        const currentYear = 2026;
+        const elapsed = currentYear - baseYear;
+        
+        // 距離計算
+        const distLog = Math.log(myAge) - Math.log(myAge - elapsed);
+        let distSum = 0; for(let i=0; i<elapsed; i++) distSum += 1/(myAge - i);
+        
+        const tbody = document.getElementById('resultBody');
+        tbody.innerHTML = '';
+
+        for (let target = 6; target <= 20; target++) {
+            // ln逆算
+            const resLog = Math.round(currentYear - (target * (1 - Math.exp(-distLog))));
+            // Σ逆算
+            let d = 0; let diff = 0;
+            while (d < distSum && diff < target - 1) { d += 1 / (target - diff); diff++; }
+            const resSum = Math.round(currentYear - diff);
+            
+            const row = tbody.insertRow();
+            row.insertCell(0).innerText = `${target}歳`;
+            row.insertCell(1).className = 'log-col'; row.insertCell(1).innerText = `${resLog}年`;
+            row.insertCell(2).className = 'sum-col'; row.insertCell(2).innerText = `${resSum}年`;
+        }
+    };
+    document.querySelectorAll('input').forEach(el => el.addEventListener('input', update));
+    update();
+</script>
+</body>
+</html>

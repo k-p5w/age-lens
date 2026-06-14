@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ねんれいレンズ</title>
+
+    <meta name="description" content="あなたの『こないだ』は、別の年齢ではいつ？ 年齢による体感時間を比較するWebアプリ">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header class="hero">
+
+        <h1>
+            ねんれいレンズ
+        </h1>
+
+        <p class="subtitle">
+            年齢というレンズで、時間を見る
+        </p>
+
+    </header>
+
+
+    <main class="container">
+
+        <section class="card">
+
+            <h2>
+                あなたについて
+            </h2>
+
+            <div class="form-row">
+
+                <label for="currentAge">
+
+                    現在の年齢
+
+                </label>
+
+                <input id="currentAge" type="number" min="1" max="120" value="30">
+
+                <span class="unit">
+                    歳
+                </span>
+
+            </div>
+
+        </section>
+
+
+        <section class="card">
+
+            <h2>
+
+                見たい出来事
+
+            </h2>
+
+            <div class="form-row">
+
+                <label for="preset">
+
+                    プリセット
+
+                </label>
+
+                <select id="preset">
+
+                    <option value="">
+                        選択してください
+                    </option>
+
+                    <option value="2015">
+                        2015年
+                    </option>
+
+                    <option value="2017">
+                        Nintendo Switch発売
+                    </option>
+
+                    <option value="2019">
+                        令和開始
+                    </option>
+
+                    <option value="2020">
+                        コロナ流行
+                    </option>
+
+                    <option value="2022">
+                        ChatGPT公開
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="divider">
+                または
+            </div>
+
+
+            <div class="form-row">
+
+                <label for="targetYear">
+
+                    西暦入力
+
+                </label>
+
+                <input id="targetYear" type="number" min="1900" max="3000" value="2015">
+
+                <span class="unit">
+                    年
+                </span>
+
+            </div>
+
+
+            <div class="button-area">
+
+                <button id="calculateButton">
+
+                    ねんれいレンズを見る
+
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <section class="card result-card" id="heroResult">
+
+            <h2>
+
+                結果
+
+            </h2>
+
+            <div id="mainResult">
+
+                <p>
+
+                    ボタンを押すと、
+
+                    <br><br>
+
+                    「60歳にとって2015年は、
+
+                    18歳にはいつ？」
+
+                    <br><br>
+
+                    を表示します。
+
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <section class="card">
+
+            <h2>
+
+                比較年齢
+
+            </h2>
+
+            <div class="slider-area">
+
+                <span>
+                    6歳
+                </span>
+
+                <input type="range" id="compareAge" min="6" max="20" value="18">
+
+                <span>
+                    20歳
+                </span>
+
+            </div>
+
+            <div id="sliderValue">
+
+                18歳
+
+            </div>
+
+        </section>
+
+
+        <section class="card">
+
+            <h2>
+
+                一覧
+
+            </h2>
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+
+                            比較年齢
+
+                        </th>
+
+                        <th>
+
+                            その人なら
+
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="resultTable">
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+
+    </main>
+
+
+    <footer>
+
+        <p>
+
+            ねんれいレンズ β
+
+        </p>
+
+        <p>
+
+            年齢による体感時間を可視化する実験プロジェクト
+
+        </p>
+
+    </footer>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
