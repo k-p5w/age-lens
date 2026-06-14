@@ -119,7 +119,7 @@ function update() {
     const baseAge = Number(ageInput.value);      // A
     const targetYear = Number(yearInput.value);
     const compareAge = Number(slider.value);     // B
-
+    if (sliderValue) sliderValue.textContent = compareAge + "歳";
     const resultContent = document.getElementById("resultContent");
     resultContent.classList.remove("placeholder");
 
@@ -173,9 +173,13 @@ function update() {
 
 function syncAndUpdate(val) {
     let age = Math.max(1, Math.min(120, Number(val)));
+
+    // 値を反映
     if (slider) slider.value = age;
     if (ageDirectInput) ageDirectInput.value = age;
     if (birthYearInput) birthYearInput.value = CURRENT_YEAR - age;
+
+    // ここで明示的に update を呼ぶ
     update();
 }
 
