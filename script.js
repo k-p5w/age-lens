@@ -161,10 +161,10 @@ function update() {
 
     resultContent.innerHTML = `
 <p><strong>${baseAge}歳</strong>の方にとっての
-<strong>${targetYear}年（約${currentYear - targetYear}年前）</strong> は、</p>
+<strong>${targetYear}年/${currentYear - targetYear}年前</strong> は、</p>
 
 <p>これを <strong>${compareAge}歳</strong> の方の感覚に置き換えると、<br>
-<strong>${Math.floor(feltYear)}年（約${passedYears.toFixed(0)}年前）</strong> に相当します。</p>
+<strong>${Math.floor(feltYear)}年/${passedYears.toFixed(0)}年前</strong> に相当します。</p>
 `;
 
 
